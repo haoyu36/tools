@@ -1,0 +1,13 @@
+version: "3.3"
+services:
+  traefik:
+    image: traefik:v2.1.4
+    container_name: "traefik"
+    ports:
+      - "80:80"
+      - "8080:8080"    # Web UI 端口
+    volumes:
+      # - "/var/run/docker.sock:/var/run/docker.sock:ro"    #  监听 Docker 事件
+      - "./config:/etc/traefik"
+
+

@@ -1,0 +1,31 @@
+# 动态配置文件
+
+http:
+  routers:
+    api:
+      entryPoints:
+        - "web"
+      rule: "Host(`traefik.k8s.com`)"
+      middlewares:
+        - test-user
+      service: api@internal
+    blog:
+      entryPoints:
+        - "web"
+      rule: "Host(`zijin.k8s.com`)"
+      middlewares:
+        - test-user
+      service: blog
+
+  middlewares:
+    test-user:
+      basicAuth:
+        users:
+        - "haoyu:$apr1$fkjwHqB5$cL70vKsIuyzfJ/5CpLMmz1" 
+
+  services:
+    blog:
+      loadBalancer:
+        servers:
+        - url: "http://122.152.206.106:8083"
+

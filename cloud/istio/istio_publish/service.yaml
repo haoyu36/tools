@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: kubia
+  name: kubia
+  namespace: default
+spec:
+  ports:
+  - port: 20500
+    targetPort: 8080
+    protocol: TCP
+    name: port
+  selector:
+    app: kubia

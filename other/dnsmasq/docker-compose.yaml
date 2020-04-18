@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  dns:
+    image: jpillora/dnsmasq
+    restart: always
+    ports:
+      - "53:53/udp"
+      - "5380:8080"  

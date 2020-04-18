@@ -1,0 +1,11 @@
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: time
+  namespace: istio-system
+spec:
+  provider:
+    type: prometheus
+    address: http://promethues.istio-system:9090
+  query: |
+    time()

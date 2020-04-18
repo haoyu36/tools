@@ -1,0 +1,28 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  labels:
+    app: kubia
+  name: kubia-v1
+  namespace: default
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+        app: kubia
+        version: v1
+  template:
+    metadata:
+      labels:
+        app: kubia
+        version: v1
+    spec:
+      containers:
+      - name: kubia
+        image: registry.cn-shenzhen.aliyuncs.com/haoyu36/kubia8080
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: port
+          containerPort: 8080
+

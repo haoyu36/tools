@@ -1,0 +1,60 @@
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: kubia
+spec:
+  # deployment reference
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: kubia
+  # the maximum time in seconds for the canary deployment
+  # to make progress before it is rollback (default 600s)
+  progressDeadlineSeconds: 100 # HPA reference (optional)
+  autoscalerRef:
+    apiVersion: autoscaling/v2beta1
+    kind: HorizontalPodAutoscaler
+    name: kubia
+  service:
+    # service port number
+    port: 20500
+    # container port number or name (optional)
+    targetPort: 8080
+    portDiscovery: true
+    # Istio gateways (optional)
+    gateways:
+    - gateway
+    # Istio virtual service host names (optional)
+    hosts:
+    - "*"
+    # Istio traffic policy (optional)
+    trafficPolicy:
+      tls:
+        # use ISTIO_MUTUAL when mTLS is enabled
+        mode: DISABLE
+    # Istio retry policy (optional)
+    retries:
+      attempts: 3
+      perTryTimeout: 1s
+      retryOn: "gateway-error,connect-failure,refused-stream"
+  analysis:
+    # schedule interval (default 60s)
+    interval: 1m
+    # max number of failed metric checks before rollback
+    threshold: 5
+    # max traffic percentage routed to canary
+    # percentage (0-100)
+    maxWeight: 100
+    # canary increment step
+    # percentage (0-100)
+    stepWeight: 20
+    metrics:
+    - name: time
+      # templateRef:
+      #   name: time
+      #   namespace: istio-system
+      # minimum req success rate (non 5xx responses)
+      # percentage (0-100)
+      thresholdRange:
+        min: 0
+      interval: 10s

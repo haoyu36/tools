@@ -1,0 +1,91 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: prometheus
+  namespace: istio-system
+spec:
+  gateways:
+  - gateway
+  hosts:
+  - "prom.zijin.haoyu95.cn"
+  http:
+  - route:
+    - destination:
+        host: prometheus
+        port:
+          number: 9090
+      weight: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: grafana
+  namespace: istio-system
+spec:
+  gateways:
+  - gateway
+  hosts:
+  - "grafana.zijin.haoyu95.cn"
+  http:
+  - route:
+    - destination:
+        host: grafana
+        port:
+          number: 3000
+      weight: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kiali
+  namespace: istio-system
+spec:
+  gateways:
+  - gateway
+  hosts:
+  - "kiali.zijin.haoyu95.cn"
+  http:
+  - route:
+    - destination:
+        host: kiali
+        port:
+          number: 20001
+      weight: 100
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: jaeger
+  namespace: istio-system
+spec:
+  gateways:
+  - gateway
+  hosts:
+  - "jaeger.zijin.haoyu95.cn"
+  http:
+  - route:
+    - destination:
+        host: tracing
+        port:
+          number: 16686
+      weight: 100
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: scope
+  namespace: weave
+spec:
+  gateways:
+  - gateway
+  hosts:
+  - "scope.zijin.haoyu95.cn"
+  http:
+  - route:
+    - destination:
+        host: weave-scope-app
+        port:
+          number: 80
+      weight: 100

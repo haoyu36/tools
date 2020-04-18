@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: kubia
+  namespace: default
+spec:
+  gateways:
+  - gateway
+  hosts:
+  - "*"
+  http:
+  - route:
+    - destination:
+        host: kubia
+        subset: v1
+        port:
+          number: 20500
+      weight: 10
+    - destination:
+        host: kubia
+        subset: v2
+        port:
+          number: 20500
+      weight: 90

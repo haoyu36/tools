@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-conf
+data:
+  nginx.conf: |
+    events {
+        worker_connections  1024;  ## Default: 1024
+    }
+    http {
+        server {
+            listen 8081;
+            listen [::]:8081;
+            server_name 10.ttt.ttt.104;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $remote_addr;
+            location / {
+                default_type application/json;
+                return 200 '{"status":"success","result":"hello, i am 8081"}'; 
+            }
+        }
+    
+        server {
+            listen 8082;
+            listen [::]:8082;
+            server_name 10.ttt.ttt.104;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $remote_addr;
+            location / {
+                default_type application/json;
+                return 200 '{"status":"success","result":"hello, i am 8082!"}'; 
+            }
+        }
+    }
+  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.17.9
+        ports:
+        - name: 8081port
+          containerPort: 8081
+        - name: 8082port
+          containerPort: 8082
+        volumeMounts:
+        - mountPath: /etc/nginx # mount nginx-conf volumn to /etc/nginx
+          readOnly: true
+          name: nginx-conf
+        - mountPath: /var/log/nginx
+          name: log
+      volumes:
+      - name: nginx-conf
+        configMap:
+          name: nginx-conf # place ConfigMap `nginx-conf` on /etc/nginx
+          items:
+            - key: nginx.conf
+              path: nginx.conf
+      - name: log
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  type: NodePort
+  ports:
+  - port: 8081
+    targetPort: 8081
+    nodePort: 30081
+    name: 8081port
+  - port: 8082
+    targetPort: 8082
+    nodePort: 30082
+    name: 8082port
+  selector:
+    app: nginx
+        

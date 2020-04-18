@@ -1,0 +1,13 @@
+version: "3"
+# 管理的服务
+services:
+  redis:
+    # 指定镜像
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - "./conf:/usr/local/etc/redis"
+      - "./data:/data"
+    command:
+      redis-server

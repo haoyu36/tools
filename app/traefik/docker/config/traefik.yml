@@ -1,0 +1,23 @@
+# 静态配置文件
+
+providers:
+  metrics: {}
+  file:
+    directory: "/etc/traefik"
+    filename: "dynamic.yml"
+    watch: true    # watch 配置文件的变化
+
+log:
+  level: DEBUG
+
+entryPoints:
+  web:
+    address: ":80"
+  # websecure:
+  #   address: ":443"
+
+api:
+  dashboard: true
+
+
+metrics: {}

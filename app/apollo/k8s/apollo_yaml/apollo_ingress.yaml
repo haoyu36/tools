@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: apollo-ingress
+spec:
+  rules:
+  - host: apollo.beta.wiqun.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: service-apollo-portal-server
+          servicePort: 8070

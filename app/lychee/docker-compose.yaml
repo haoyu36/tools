@@ -1,0 +1,15 @@
+version: "2"
+services:
+  lychee:
+    image: linuxserver/lychee:latest
+    container_name: lychee
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - ./config:/config
+      - ./pictures:/pictures
+    ports:
+      - 8081:80
+    restart: always

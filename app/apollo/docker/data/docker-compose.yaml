@@ -1,0 +1,12 @@
+version: '2'
+services:
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: "Admin123"
+    restart: always
+    volumes:
+      - "./db:/var/lib/mysql"
+      - "./init:/docker-entrypoint-initdb.d/"
+    ports:
+      - "3306:3306"

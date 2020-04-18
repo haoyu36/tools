@@ -1,0 +1,19 @@
+version: '3.3'
+services:
+  jenkins-master:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-master
+    logging:  # 限制容器服务的日志大小，否则 docker logs 会占满磁盘空间
+      options:
+        max-size: "30m"
+        max-file: "2"
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins-data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    user: root
+    restart: always
