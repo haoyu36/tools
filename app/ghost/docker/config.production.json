@@ -7,7 +7,7 @@
   "database": {
     "client": "mysql",
     "connection": {
-      "host": "192.168.43.20",
+      "host": "192.168.5.214",
       "port": 3306,
       "user": "root",
       "password": "Admin123",

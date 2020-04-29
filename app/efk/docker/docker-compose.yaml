@@ -1,7 +1,7 @@
 version: '2.2'
 services:
   cerebro:
-    image: lmenezes/cerebro:0.8.3
+    image: registry.cn-shenzhen.aliyuncs.com/haoyu36/cerebro:0.8.3
     container_name: hwc_cerebro
     ports:
       - "9000:9000"
@@ -10,7 +10,7 @@ services:
     networks:
       - hwc_es7net
   kibana:
-    image: kibana:7.5.1
+    image: registry.cn-shenzhen.aliyuncs.com/haoyu36/kibana:7.5.1
     container_name: hwc_kibana7
     environment:
       #- I18N_LOCALE=zh-CN
@@ -22,7 +22,7 @@ services:
     networks:
       - hwc_es7net
   elasticsearch:
-    image: elasticsearch:7.5.1
+    image: registry.cn-shenzhen.aliyuncs.com/haoyu36/elasticsearch:7.5.1
     container_name: es7_hot
     environment:
       - cluster.name=geektime-hwc
@@ -43,7 +43,7 @@ services:
     networks:
       - hwc_es7net
   elasticsearch2:
-    image: elasticsearch:7.5.1
+    image: registry.cn-shenzhen.aliyuncs.com/haoyu36/elasticsearch:7.5.1
     container_name: es7_warm
     environment:
       - cluster.name=geektime-hwc
@@ -62,7 +62,7 @@ services:
     networks:
       - hwc_es7net
   elasticsearch3:
-    image: elasticsearch:7.5.1
+    image: registry.cn-shenzhen.aliyuncs.com/haoyu36/elasticsearch:7.5.1
     container_name: es7_cold
     environment:
       - cluster.name=geektime-hwc
