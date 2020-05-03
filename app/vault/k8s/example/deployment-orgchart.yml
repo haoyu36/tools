@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orgchart
+  labels:
+    app: vault-agent-injector-demo
+spec:
+  selector:
+    matchLabels:
+      app: vault-agent-injector-demo
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        vault.hashicorp.com/agent-inject: "true"    # 启用 Vault Agent 注入
+        vault.hashicorp.com/agent-inject-status: "update"    # 通知重新注入
+        vault.hashicorp.com/role: "internal-app"    # Vault Kubernetes 身份验证角色
+        vault.hashicorp.com/agent-inject-secret-vault-config.json: "internal/data/database/config"
+        vault.hashicorp.com/agent-inject-template-vault-config.json: |
+          {{- with secret "internal/data/database/config" -}}
+          {"username":"{{ .Data.data.username }}","password":"{{ .Data.data.password }}"}
+          {{- end -}}
+      labels:
+        app: vault-agent-injector-demo
+    spec:
+      serviceAccountName: internal-app
+      containers:
+        - name: orgchart
+          image: jweissig/app:0.0.1

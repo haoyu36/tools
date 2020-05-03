@@ -82,14 +82,6 @@ services:
       - hwc_es7net
 
 
-volumes:
-  hwc_es7data_hot:
-    driver: local
-  hwc_es7data_warm:
-    driver: local
-  hwc_es7data_cold:
-    driver: local
-
 networks:
   hwc_es7net:
     driver: bridge

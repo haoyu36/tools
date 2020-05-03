@@ -36,6 +36,7 @@ provider "alicloud" {}
 
 请为RAM用户添加系统策略（AliyunSTSAssumeRoleAccess）或自定义策
 
+
 创建角色并授权管理所有云资源
 
 
@@ -51,18 +52,9 @@ provider "alicloud" {}
 
 
 
-
-
-
-
-
-
-
-
-
 执行 `terraform plan` 时报错
 
-![1572335904](https://pic.haoyu95.cn/uploads/big/c3ab8129e422516e54b62124263af71f.png)
+![1572335904](http://pic.haoyu95.cn/uploads/big/c3ab8129e422516e54b62124263af71f.png)
 
 原因：没有更新机器时间
 
