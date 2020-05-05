@@ -50,8 +50,6 @@ provider "alicloud" {}
 
 
 
-
-
 执行 `terraform plan` 时报错
 
 ![1572335904](http://pic.haoyu95.cn/uploads/big/c3ab8129e422516e54b62124263af71f.png)
