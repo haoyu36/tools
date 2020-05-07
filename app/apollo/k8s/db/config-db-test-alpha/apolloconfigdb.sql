@@ -1,3 +1,20 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+# Create Database
+# ------------------------------------------------------------
+CREATE DATABASE IF NOT EXISTS TestAlphaApolloConfigDB DEFAULT CHARACTER SET = utf8mb4;
+
+Use TestAlphaApolloConfigDB;
+
+# Dump of table app
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `App`;
 
 CREATE TABLE `App` (
@@ -20,6 +37,10 @@ CREATE TABLE `App` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='应用表';
 
 
+
+# Dump of table appnamespace
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `AppNamespace`;
 
 CREATE TABLE `AppNamespace` (
@@ -41,6 +62,10 @@ CREATE TABLE `AppNamespace` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='应用namespace定义';
 
 
+
+# Dump of table audit
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `Audit`;
 
 CREATE TABLE `Audit` (
@@ -58,6 +83,10 @@ CREATE TABLE `Audit` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='日志审计表';
 
+
+
+# Dump of table cluster
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Cluster`;
 
@@ -77,6 +106,10 @@ CREATE TABLE `Cluster` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='集群';
 
+
+
+# Dump of table commit
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Commit`;
 
@@ -99,6 +132,8 @@ CREATE TABLE `Commit` (
   KEY `NamespaceName` (`NamespaceName`(191))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='commit 历史表';
 
+# Dump of table grayreleaserule
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `GrayReleaseRule`;
 
@@ -122,6 +157,9 @@ CREATE TABLE `GrayReleaseRule` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='灰度规则表';
 
 
+# Dump of table instance
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `Instance`;
 
 CREATE TABLE `Instance` (
@@ -139,6 +177,9 @@ CREATE TABLE `Instance` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='使用配置的应用实例';
 
 
+
+# Dump of table instanceconfig
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `InstanceConfig`;
 
@@ -159,6 +200,10 @@ CREATE TABLE `InstanceConfig` (
   KEY `IX_Valid_Namespace` (`ConfigAppId`,`ConfigClusterName`,`ConfigNamespaceName`,`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='应用实例的配置信息';
 
+
+
+# Dump of table item
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Item`;
 
@@ -181,6 +226,9 @@ CREATE TABLE `Item` (
 
 
 
+# Dump of table namespace
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `Namespace`;
 
 CREATE TABLE `Namespace` (
@@ -200,6 +248,10 @@ CREATE TABLE `Namespace` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='命名空间';
 
 
+
+# Dump of table namespacelock
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `NamespaceLock`;
 
 CREATE TABLE `NamespaceLock` (
@@ -215,6 +267,10 @@ CREATE TABLE `NamespaceLock` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='namespace的编辑锁';
 
+
+
+# Dump of table release
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Release`;
 
@@ -238,6 +294,10 @@ CREATE TABLE `Release` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`),
   KEY `IX_ReleaseKey` (`ReleaseKey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='发布';
+
+
+# Dump of table releasehistory
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `ReleaseHistory`;
 
@@ -263,6 +323,9 @@ CREATE TABLE `ReleaseHistory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='发布历史';
 
 
+# Dump of table releasemessage
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `ReleaseMessage`;
 
 CREATE TABLE `ReleaseMessage` (
@@ -274,6 +337,10 @@ CREATE TABLE `ReleaseMessage` (
   KEY `IX_Message` (`Message`(191))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='发布消息';
 
+
+
+# Dump of table serverconfig
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `ServerConfig`;
 
@@ -293,11 +360,39 @@ CREATE TABLE `ServerConfig` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='配置服务自身配置';
 
+# Dump of table accesskey
+# ------------------------------------------------------------
 
+DROP TABLE IF EXISTS `AccessKey`;
+
+CREATE TABLE `AccessKey` (
+  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `AppId` varchar(500) NOT NULL DEFAULT 'default' COMMENT 'AppID',
+  `Secret` varchar(128) NOT NULL DEFAULT '' COMMENT 'Secret',
+  `IsEnabled` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: enabled, 0: disabled',
+  `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
+  `DataChange_CreatedBy` varchar(32) NOT NULL DEFAULT 'default' COMMENT '创建人邮箱前缀',
+  `DataChange_CreatedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `DataChange_LastModifiedBy` varchar(32) NOT NULL DEFAULT '' COMMENT '最后修改人邮箱前缀',
+  `DataChange_LastTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  PRIMARY KEY (`Id`),
+  KEY `AppId` (`AppId`(191)),
+  KEY `DataChange_LastTime` (`DataChange_LastTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='访问密钥';
+
+# Config
+# ------------------------------------------------------------
 INSERT INTO `ServerConfig` (`Key`, `Cluster`, `Value`, `Comment`)
 VALUES
-    ('eureka.service.url', 'default', 'http://statefulset-apollo-config-server-prod-0.service-apollo-meta-server-prod:8080/eureka/,http://statefulset-apollo-config-server-prod-1.service-apollo-meta-server-prod:8080/eureka/,http://statefulset-apollo-config-server-prod-2.service-apollo-meta-server-prod:8080/eureka/', 'Eureka服务Url，多个service以英文逗号分隔'),
+    ('eureka.service.url', 'default', 'http://statefulset-apollo-config-server-test-alpha-0.service-apollo-meta-server-test-alpha:8080/eureka/,http://statefulset-apollo-config-server-test-alpha-1.service-apollo-meta-server-test-alpha:8080/eureka/,http://statefulset-apollo-config-server-test-alpha-2.service-apollo-meta-server-test-alpha:8080/eureka/', 'Eureka服务Url，多个service以英文逗号分隔'),
     ('namespace.lock.switch', 'default', 'false', '一次发布只能有一个人修改开关'),
     ('item.key.length.limit', 'default', '128', 'item key 最大长度限制'),
     ('item.value.length.limit', 'default', '20000', 'item value最大长度限制'),
     ('config-service.cache.enabled', 'default', 'false', 'ConfigService是否开启缓存，开启后能提高性能，但是会增大内存消耗！');
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

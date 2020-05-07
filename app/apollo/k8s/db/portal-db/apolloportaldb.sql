@@ -1,3 +1,20 @@
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+# Create Database
+# ------------------------------------------------------------
+CREATE DATABASE IF NOT EXISTS ApolloPortalDB DEFAULT CHARACTER SET = utf8mb4;
+
+Use ApolloPortalDB;
+
+# Dump of table app
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `App`;
 
 CREATE TABLE `App` (
@@ -21,6 +38,9 @@ CREATE TABLE `App` (
 
 
 
+# Dump of table appnamespace
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `AppNamespace`;
 
 CREATE TABLE `AppNamespace` (
@@ -41,6 +61,10 @@ CREATE TABLE `AppNamespace` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='应用namespace定义';
 
+
+
+# Dump of table consumer
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Consumer`;
 
@@ -64,6 +88,9 @@ CREATE TABLE `Consumer` (
 
 
 
+# Dump of table consumeraudit
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `ConsumerAudit`;
 
 CREATE TABLE `ConsumerAudit` (
@@ -79,6 +106,9 @@ CREATE TABLE `ConsumerAudit` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='consumer审计表';
 
 
+
+# Dump of table consumerrole
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `ConsumerRole`;
 
@@ -97,6 +127,11 @@ CREATE TABLE `ConsumerRole` (
   KEY `IX_ConsumerId_RoleId` (`ConsumerId`,`RoleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='consumer和role的绑定表';
 
+
+
+# Dump of table consumertoken
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `ConsumerToken`;
 
 CREATE TABLE `ConsumerToken` (
@@ -114,6 +149,8 @@ CREATE TABLE `ConsumerToken` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='consumer token表';
 
+# Dump of table favorite
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Favorite`;
 
@@ -133,6 +170,9 @@ CREATE TABLE `Favorite` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COMMENT='应用收藏表';
 
+# Dump of table permission
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `Permission`;
 
 CREATE TABLE `Permission` (
@@ -151,6 +191,9 @@ CREATE TABLE `Permission` (
 
 
 
+# Dump of table role
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `Role`;
 
 CREATE TABLE `Role` (
@@ -166,6 +209,10 @@ CREATE TABLE `Role` (
   KEY `IX_DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
+
+
+# Dump of table rolepermission
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `RolePermission`;
 
@@ -183,6 +230,11 @@ CREATE TABLE `RolePermission` (
   KEY `IX_RoleId` (`RoleId`),
   KEY `IX_PermissionId` (`PermissionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色和权限的绑定表';
+
+
+
+# Dump of table serverconfig
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `ServerConfig`;
 
@@ -202,6 +254,10 @@ CREATE TABLE `ServerConfig` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='配置服务自身配置';
 
 
+
+# Dump of table userrole
+# ------------------------------------------------------------
+
 DROP TABLE IF EXISTS `UserRole`;
 
 CREATE TABLE `UserRole` (
@@ -219,6 +275,8 @@ CREATE TABLE `UserRole` (
   KEY `IX_UserId_RoleId` (`UserId`,`RoleId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户和role的绑定表';
 
+# Dump of table Users
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Users`;
 
@@ -232,6 +290,8 @@ CREATE TABLE `Users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 
+# Dump of table Authorities
+# ------------------------------------------------------------
 
 DROP TABLE IF EXISTS `Authorities`;
 
@@ -243,22 +303,28 @@ CREATE TABLE `Authorities` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-
+# Config
+# ------------------------------------------------------------
 INSERT INTO `ServerConfig` (`Key`, `Value`, `Comment`)
 VALUES
-    ('apollo.portal.envs', 'uat', '可支持的环境列表'),
-    ('organizations', '[{\"orgId\":\"TL\",\"orgName\":\"initialize\"}]', '部门列表'),
+    ('apollo.portal.envs', 'dev, fat, uat, pro', '可支持的环境列表'),
+    ('organizations', '[{\"orgId\":\"TEST1\",\"orgName\":\"样例部门1\"},{\"orgId\":\"TEST2\",\"orgName\":\"样例部门2\"}]', '部门列表'),
     ('superAdmin', 'apollo', 'Portal超级管理员'),
     ('api.readTimeout', '10000', 'http接口read timeout'),
-    ('consumer.token.salt', '1acc4de60f911244a463544f4c918ae6', 'consumer token salt'),
-    ('admin.createPrivateNamespace.switch', 'true', '是否允许项目管理员创建私有namespace');
-
+    ('consumer.token.salt', 'someSalt', 'consumer token salt'),
+    ('admin.createPrivateNamespace.switch', 'true', '是否允许项目管理员创建私有namespace'),
+    ('configView.memberOnly.envs', 'pro', '只对项目成员显示配置信息的环境列表，多个env以英文逗号分隔'),
+    ('apollo.portal.meta.servers', '{}', '各环境Meta Service列表');
 
 INSERT INTO `Users` (`Username`, `Password`, `Email`, `Enabled`)
 VALUES
-	('apollo', '$2a$10$ghh5KXnIDNbrmkUbPj0IY.lvD9PrYImK0pd3M7LpBawad8p0t3xM6', 'apollo@acme.com', 1);
+	('apollo', '$2a$10$7r20uS.BQ9uBpf3Baj3uQOZvMVvB1RN3PYoKE94gtz2.WAOuiiwXS', 'apollo@admin.com', 1);
 
 INSERT INTO `Authorities` (`Username`, `Authority`) VALUES ('apollo', 'ROLE_user');
 
-
-
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

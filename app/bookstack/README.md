@@ -12,6 +12,8 @@
 
 
 
+tar -czvf bookstack-files-backup.tar.gz .env public/uploads storage/uploads
 
+mysqldump -u benny bookstack > bookstack.backup.sql
 
 

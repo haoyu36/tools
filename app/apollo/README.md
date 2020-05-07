@@ -1,16 +1,11 @@
 
-
-
-
 > Apollo 作为分布式配置中心，能管理不同环境、不同集群的配置，具有实时推送、权限控制、流程治理、回滚等等功能
 
 
 # 一：概览
 
 
-
 # 架构
-
 
 
 # 部署
@@ -50,6 +45,8 @@ apollo 的部署分为两种方式，单容器部署和分布式部署。本地�
 - 修改每个 sql 文件里的数据库名称，如 `ApolloConfigDB` 改为 `ApolloConfigDBDev`
 - 修改每个 sql 文件 `ServerConfig` 表的 `eureka.service.url`，dev、fat、uat、pro 分别为 8080、8081、8082、8083
 - `apolloportaldb.sql` 修改 `ServerConfig` 表的 `envs` 项，如 `dev,fat,uat,pro`，`organizations` 改为自己的部门列表
+
+
 
 
 ## K8s 部署
@@ -95,12 +92,8 @@ apollo 的部署分为两种方式，单容器部署和分布式部署。本地�
 
 
 
-# 最佳实践
-
-
-安全性
-
-
 # 参考资料
 
 - [Docker部署Apollo配置中心](https://juejin.im/post/5c261387e51d4558bf3974e1)
+
+

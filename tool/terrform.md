@@ -64,7 +64,7 @@ provider "alicloud" {}
 - [Terraform 学习笔记](https://www.jianshu.com/p/e0dd50f7ee98)
 - [Alibaba Cloud Provider](https://www.terraform.io/docs/providers/alicloud/index.html)
 - [玩转阿里云 Terraform(二)：Terraform 的几个关键概念](https://zhuanlan.zhihu.com/p/87364600)
-
+- [terraform-providers/terraform-provider-alicloud](https://github.com/terraform-providers/terraform-provider-alicloud)
 
 
 

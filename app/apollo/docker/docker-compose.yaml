@@ -1,15 +1,8 @@
 version: '2.2'
 services:
   apollo:
-    image: idoop/docker-apollo:1.5.1
+    image: idoop/docker-apollo:1.6.1
     restart: always
-      options:
-        max-size: "10m"
-
-    # network_mode: "host"
-    volumes:
-      # 如果需要查看日志,挂载容器中的/opt路径出来即可.
-      - ./logs:/opt
     environment:
       # 开启Portal,默认端口: 8070
       PORTAL_DB: jdbc:mysql://127.0.0.1:3306/ApolloPortalDB?characterEncoding=utf8
