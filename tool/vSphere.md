@@ -25,27 +25,14 @@ vCenter Server 是VMware vSphere 虚拟化架构中的核心管理工具，可�
 
 
 
-
-
-
-
-
-
-
-登录的时候可以用小写，但创建内容库的时候不能使用小写的账号
-
 访问 5480 页面的时，需使用 https 访问
 
 
 
+- [使用 vsphere-automation-sdk-python 自动创建虚拟机](https://juejin.im/post/5d08c5cee51d45777a1261a2#heading-35)
+- [Disable Virtual Machine Swap File (.vswp)](https://www.virten.net/2014/09/remove-virtual-machine-swap-file-vswp/)
 
 
-
-
-https://signin.aliyun.com/zhanlanbao.onaliyun.com/login.htm
-
-
-
-
+- [在 VMware Host Client 中挂载 NFS 数据存储](https://docs.vmware.com/cn/VMware-vSphere/6.0/com.vmware.vsphere.html.hostclient.doc/GUID-9F526FAE-A72E-462B-86CE-14078D3A3C67.html)
 
 

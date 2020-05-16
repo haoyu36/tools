@@ -198,6 +198,7 @@ client = hvac.Client(url='your ip addr', token='your token')
 client.secrets.kv.v2.read_secret_version(path='hello', mount_point='zijin')
 ```
 
+
 # k8s 使用 vault
 
 Vault 提供了 Kubernetes 身份验证方法，使客户端可以使用 Kubernetes 服务帐户令牌进行身份验证。令牌在创建时会提供给每个 pod。在身份验证期间，Vault通过查询已配置的 Kubernetes 端点来验证服务帐户令牌是否有效
@@ -298,3 +299,4 @@ spec:
 - [Vault+K8S 最佳实践](https://www.sagittarius.ai/blog/2018/10/21/vault-k8s-best-practice)
 - [在 Kubernetes 上部署 Vault](https://www.qikqiak.com/post/deploy-vault-on-k8s/)
 
+- [chiflix/vault-best-practice](https://github.com/chiflix/vault-best-practice)

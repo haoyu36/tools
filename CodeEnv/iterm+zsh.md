@@ -76,3 +76,9 @@ oh-my-zsh 是一个开源的框架，用于管理 Zsh 配置及插件，安装�
 - [A User's Guide to the Z-Shell](http://zsh.sourceforge.net/Guide/zshguide.html)
 - [Master Your Z Shell with These Outrageously Useful Tips](http://reasoniamhere.com/2014/01/11/outrageously-useful-tips-to-master-your-z-shell/)
 - [manpagez: man pages & more](http://www.manpagez.com/man/1/zshmisc/)
+
+
+
+- [Linux终极shell-Z Shell--用强大的zsh & oh-my-zsh把Bash换掉](https://blog.csdn.net/gatieme/article/details/52741221)
+
+

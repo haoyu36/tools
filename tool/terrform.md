@@ -67,5 +67,6 @@ provider "alicloud" {}
 - [terraform-providers/terraform-provider-alicloud](https://github.com/terraform-providers/terraform-provider-alicloud)
 
 
+- [releases.hashicorp.com/](https://releases.hashicorp.com/)
 
 

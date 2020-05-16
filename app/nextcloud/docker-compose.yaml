@@ -1,10 +1,16 @@
-version: '2'
-
+---
+version: "2.1"
 services:
-  app:
-    image: nextcloud:17.0.0
-    ports:
-      - 8089:80
+  nextcloud:
+    image: linuxserver/nextcloud:18.0.4-ls79
+    container_name: nextcloud
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
     volumes:
-      - ./nextcloud:/var/www/html
-    restart: always
+      - ./appdata:/config
+      - ./data:/data
+    ports:
+      - 8090:443
+    restart: unless-stopped
