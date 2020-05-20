@@ -308,11 +308,13 @@ CREATE TABLE `Authorities` (
 INSERT INTO `ServerConfig` (`Key`, `Value`, `Comment`)
 VALUES
     ('apollo.portal.envs', 'dev,fat,uat,pro', '可支持的环境列表'),
-    ('organizations', '[{\"orgId\":\"TL\",\"orgName\":\"initialize\"}]', '部门列表'),
+    ('organizations', '[{\"orgId\":\"TEST1\",\"orgName\":\"样例部门1\"},{\"orgId\":\"TEST2\",\"orgName\":\"样例部门2\"}]', '部门列表'),
     ('superAdmin', 'apollo', 'Portal超级管理员'),
     ('api.readTimeout', '10000', 'http接口read timeout'),
-    ('consumer.token.salt', '1acc4de60f911244a463544f4c918ae6', 'consumer token salt'),
-    ('admin.createPrivateNamespace.switch', 'true', '是否允许项目管理员创建私有namespace');
+    ('consumer.token.salt', 'someSalt', 'consumer token salt'),
+    ('admin.createPrivateNamespace.switch', 'true', '是否允许项目管理员创建私有namespace'),
+    ('configView.memberOnly.envs', 'pro', '只对项目成员显示配置信息的环境列表，多个env以英文逗号分隔'),
+    ('apollo.portal.meta.servers', '{}', '各环境Meta Service列表');
 
 
 INSERT INTO `Users` (`Username`, `Password`, `Email`, `Enabled`)

@@ -1,3 +1,28 @@
+
+# docker 部署
+
+单容器部署采用第三方打包的镜像，一个 All in one 版本，即 [idoop/docker-apollo](https://hub.docker.com/r/idoop/docker-apollo)
+
+
+## 目录结构
+
+部署相关文件如下：
+
+```shell
+.
+├── README.md
+├── data                       # 将 apollo 与数据库分开部署的
+│   ├── docker-compose.yaml    # 部署 mysql
+│   ├── init-sql               # 初始化的 sql 文件
+│   └── init.sh                # 自动生成需要部署的 sql 文件
+└── docker-compose.yaml        # 部署 apollo
+```
+
+
+## 自动生成 sql
+
+
+```shell
 #!/bin/bash
 
 # 下载 ApolloPortalDB 和 ApolloConfigDB 初始 sql 文件，地址 https://github.com/ctripcorp/apollo/tree/master/scripts/sql 
@@ -33,4 +58,7 @@ sed -i 's@http://localhost:8080/eureka/@http://localhost:8083/eureka/@g' init-sq
 sed -i "s@'apollo.portal.envs', 'dev'@'apollo.portal.envs', 'dev,fat,uat,pro'@g" init-sql/apolloportaldb.sql
 
 rm -rf apolloconfigdb.sql apolloportaldb.sql
+```
+
+生成好之后可以修改 apolloportaldb.sql 的部门列表，当然也可以在 apollo 启动好之后在界面修改
 

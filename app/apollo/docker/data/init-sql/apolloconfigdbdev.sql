@@ -8,9 +8,9 @@
 
 # Create Database
 # ------------------------------------------------------------
-CREATE DATABASE IF NOT EXISTS ApolloConfigDBUat DEFAULT CHARACTER SET = utf8mb4;
+CREATE DATABASE IF NOT EXISTS ApolloConfigDBDev DEFAULT CHARACTER SET = utf8mb4;
 
-Use ApolloConfigDBUat;
+Use ApolloConfigDBDev;
 
 # Dump of table app
 # ------------------------------------------------------------
@@ -360,15 +360,35 @@ CREATE TABLE `ServerConfig` (
   KEY `DataChange_LastTime` (`DataChange_LastTime`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='配置服务自身配置';
 
+# Dump of table accesskey
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `AccessKey`;
+
+CREATE TABLE `AccessKey` (
+  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增主键',
+  `AppId` varchar(500) NOT NULL DEFAULT 'default' COMMENT 'AppID',
+  `Secret` varchar(128) NOT NULL DEFAULT '' COMMENT 'Secret',
+  `IsEnabled` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: enabled, 0: disabled',
+  `IsDeleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '1: deleted, 0: normal',
+  `DataChange_CreatedBy` varchar(32) NOT NULL DEFAULT 'default' COMMENT '创建人邮箱前缀',
+  `DataChange_CreatedTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `DataChange_LastModifiedBy` varchar(32) NOT NULL DEFAULT '' COMMENT '最后修改人邮箱前缀',
+  `DataChange_LastTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+  PRIMARY KEY (`Id`),
+  KEY `AppId` (`AppId`(191)),
+  KEY `DataChange_LastTime` (`DataChange_LastTime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='访问密钥';
+
 # Config
 # ------------------------------------------------------------
 INSERT INTO `ServerConfig` (`Key`, `Cluster`, `Value`, `Comment`)
 VALUES
-    ('eureka.service.url', 'default', 'http://localhost:8082/eureka/', 'Eureka服务Url，多个service以英文逗号分隔'),
+    ('eureka.service.url', 'default', 'http://localhost:8081/eureka/', 'Eureka服务Url，多个service以英文逗号分隔'),
     ('namespace.lock.switch', 'default', 'false', '一次发布只能有一个人修改开关'),
     ('item.key.length.limit', 'default', '128', 'item key 最大长度限制'),
     ('item.value.length.limit', 'default', '20000', 'item value最大长度限制'),
-    ('config-service.cache.enabled', 'default', 'true', 'ConfigService是否开启缓存，开启后能提高性能，但是会增大内存消耗！');
+    ('config-service.cache.enabled', 'default', 'false', 'ConfigService是否开启缓存，开启后能提高性能，但是会增大内存消耗！');
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

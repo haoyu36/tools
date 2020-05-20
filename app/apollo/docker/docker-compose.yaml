@@ -1,4 +1,4 @@
-version: '2.2'
+version: '3.3'
 services:
   apollo:
     image: idoop/docker-apollo:1.6.1
@@ -9,22 +9,22 @@ services:
       PORTAL_DB_USER: root
       PORTAL_DB_PWD: Admin123
 
-      # 开启dev环境, 默认端口: config 8080, admin 8090
+      # 开启dev环境, 默认端口: 8080
       DEV_DB: jdbc:mysql://127.0.0.1:3306/ApolloConfigDBDev?characterEncoding=utf8
       DEV_DB_USER: root
       DEV_DB_PWD: Admin123
 
-      # 开启fat环境, 默认端口: config 8081, admin 8091
+      # 开启fat环境, 默认端口: 8081
       FAT_DB: jdbc:mysql://127.0.0.1:3306/ApolloConfigDBFat?characterEncoding=utf8
       FAT_DB_USER: root
       FAT_DB_PWD: Admin123
 
-      # 开启 uat 环境, 默认端口: config 8082
+      # 开启 uat 环境, 默认端口: 8082
       UAT_DB: jdbc:mysql://127.0.0.1:3306/ApolloConfigDBUat?characterEncoding=utf8
       UAT_DB_USER: root
       UAT_DB_PWD: Admin123
 
-      # 开启 pro 环境, 默认端口: config 8083
+      # 开启 pro 环境, 默认端口: 8083
       PRO_DB: jdbc:mysql://127.0.0.1:3306/ApolloConfigDBPro?characterEncoding=utf8
       PRO_DB_USER: root
       PRO_DB_PWD: Admin123
