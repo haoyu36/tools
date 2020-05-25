@@ -15,10 +15,10 @@ spec:
         subset: v1
         port:
           number: 20500
-      weight: 10
+      weight: 50
     - destination:
         host: kubia
         subset: v2
         port:
           number: 20500
-      weight: 90
+      weight: 50

@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: kubia
-        image: registry.cn-shenzhen.aliyuncs.com/haoyu36/kubia8080-v2
+        image: registry.cn-shenzhen.aliyuncs.com/haoyu36/kubia8080
         imagePullPolicy: IfNotPresent
         ports:
         - name: port
