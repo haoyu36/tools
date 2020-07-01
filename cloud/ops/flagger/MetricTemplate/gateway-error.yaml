@@ -1,0 +1,30 @@
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: gateway-error
+  namespace: default
+spec:
+  provider:
+    type: prometheus
+    address: http://192.168.1.204:9090
+  query: |
+    sum(
+        rate(
+            istio_requests_total{
+              reporter="destination",
+              destination_workload_namespace="{{ namespace }}",
+              destination_workload="zl-doorgateway-primary",
+              response_code=~"4.*"
+            }[{{ interval }}]
+        )
+    )
+    /
+    sum(
+        rate(
+            istio_requests_total{
+              reporter="destination",
+              destination_workload_namespace="{{ namespace }}",
+              destination_workload="zl-doorgateway-primary"
+            }[{{ interval }}]
+        )
+    ) * 100

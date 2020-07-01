@@ -4,6 +4,7 @@ metadata:
   name: orgchart
   labels:
     app: vault-agent-injector-demo
+  namespace: vault
 spec:
   selector:
     matchLabels:
@@ -13,13 +14,7 @@ spec:
     metadata:
       annotations:
         vault.hashicorp.com/agent-inject: "true"    # 启用 Vault Agent 注入
-        vault.hashicorp.com/agent-inject-status: "update"    # 通知重新注入
-        vault.hashicorp.com/role: "internal-app"    # Vault Kubernetes 身份验证角色
-        vault.hashicorp.com/agent-inject-secret-vault-config.json: "internal/data/database/config"
-        vault.hashicorp.com/agent-inject-template-vault-config.json: |
-          {{- with secret "internal/data/database/config" -}}
-          {"username":"{{ .Data.data.username }}","password":"{{ .Data.data.password }}"}
-          {{- end -}}
+        vault.hashicorp.com/agent-configmap: "my-configmap"
       labels:
         app: vault-agent-injector-demo
     spec:
@@ -27,3 +22,73 @@ spec:
       containers:
         - name: orgchart
           image: jweissig/app:0.0.1
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+  namespace: vault
+data:
+  config.hcl: |
+    "auto_auth" = {
+      "method" = {
+        "config" = {
+          "role" = "internal-app"
+        }
+        "type" = "kubernetes"
+      }
+
+      "sink" = {
+        "config" = {
+          "path" = "/home/vault/.token"
+        }
+
+        "type" = "file"
+      }
+    }
+
+    "exit_after_auth" = false
+    "pid_file" = "/home/vault/.pid"
+
+    "template" = {
+      "contents" = "{\"config\": {[[ with secret \"internal/data/database/config\" ]][[ range $k, $v := .Data.data ]]\"[[ $k ]]\": \"[[ $v ]]\",[[ end ]][[ end ]]},\"xxx\": {[[ with secret \"internal/data/database/xxx\" ]][[ range $k, $v := .Data.data ]]\"[[ $k ]]\": \"[[ $v ]]\",[[ end ]][[ end ]]}}"
+      "destination" = "/vault/secrets/config"
+      "left_delimiter" = "[["
+      "right_delimiter" = "]]"
+    }
+
+    "vault" = {
+      "address" = "http://192.168.1.204:8200"
+    }
+  config-init.hcl: |
+    "auto_auth" = {
+      "method" = {
+        "config" = {
+          "role" = "internal-app"
+        }
+        "type" = "kubernetes"
+      }
+
+      "sink" = {
+        "config" = {
+          "path" = "/home/vault/.token"
+        }
+
+        "type" = "file"
+      }
+    }
+
+    "exit_after_auth" = true
+    "pid_file" = "/home/vault/.pid"
+
+    "template" = {
+      "contents" = "{\"config\": {[[ with secret \"internal/data/database/config\" ]][[ range $k, $v := .Data.data ]]\"[[ $k ]]\": \"[[ $v ]]\",[[ end ]][[ end ]]},\"xxx\": {[[ with secret \"internal/data/database/xxx\" ]][[ range $k, $v := .Data.data ]]\"[[ $k ]]\": \"[[ $v ]]\",[[ end ]][[ end ]]}}"
+      "destination" = "/vault/secrets/config"
+      "left_delimiter" = "[["
+      "right_delimiter" = "]]"
+    }
+
+    "vault" = {
+      "address" = "http://192.168.1.204:8200"
+    }
