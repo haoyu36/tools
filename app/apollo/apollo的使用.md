@@ -13,7 +13,7 @@ apollo 的部署分为两种方式，单容器部署和分布式部署。本地�
 
 以下所有配置文件都可以在我的仓库里找到 [haoyu36/tools](https://github.com/haoyu36/tools.git)
 
-# 参考资料
+# 相关阅读
 
 - [Docker部署Apollo配置中心](https://juejin.im/post/5c261387e51d4558bf3974e1)
 
