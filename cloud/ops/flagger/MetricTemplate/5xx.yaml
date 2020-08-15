@@ -1,8 +1,8 @@
 apiVersion: flagger.app/v1beta1
 kind: MetricTemplate
 metadata:
-  name: 4xx-error
-  namespace: default
+  name: 5xx
+  namespace: flagger
 spec:
   provider:
     type: prometheus
@@ -14,7 +14,7 @@ spec:
               reporter="destination",
               destination_workload_namespace="{{ namespace }}",
               destination_workload="{{ target }}",
-              response_code=~"4.*"
+              response_code=~"5.*"
             }[{{ interval }}]
         )
     )

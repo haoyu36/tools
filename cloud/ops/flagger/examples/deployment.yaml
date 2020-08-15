@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: podinfo
+  namespace: flagger
   labels:
     app: podinfo
 spec:
@@ -20,12 +21,13 @@ spec:
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9797"
+        name: 'haoyu'
       labels:
         app: podinfo
     spec:
       containers:
       - name: podinfod
-        image: stefanprodan/podinfo:3.1.0
+        image: stefanprodan/podinfo:3.1.2
         imagePullPolicy: IfNotPresent
         ports:
         - name: http

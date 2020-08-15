@@ -1,0 +1,11 @@
+apiVersion: flagger.app/v1beta1
+kind: MetricTemplate
+metadata:
+  name: time
+  namespace: flagger
+spec:
+  provider:
+    type: prometheus
+    address: http://promethues:9090
+  query: |
+    time()

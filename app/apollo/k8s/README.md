@@ -1,24 +1,6 @@
+### K8s 安装
 
-
-# K8s 部署
-
-## 目录结构
-
-
-
-```shell
-.
-├── README.md
-├── customize        # 自定义在 k8s 中只部署一个环境
-├── db               # 原始 sql 文件
-├── init.sh          # 打包镜像
-└── kubernetes       # 原始部署文件
-```
-
-
-## 构建镜像
-
-分布式部署共需 4 个镜像，需要自己打包，打包过程见[官方文档](https://github.com/ctripcorp/apollo/tree/master/scripts/apollo-on-kubernetes)，注意应保持版本号一致
+K8s 中部署共需 4 个镜像，需要自己打包，打包过程见[官方文档](https://github.com/ctripcorp/apollo/tree/master/scripts/apollo-on-kubernetes)，注意应保持版本号一致
 
 k8s 中部署也同时支持 4 种环境，不过环境的命名相较与本地有一些不同。本地部署环境为 dev、fat、uat、pro，k8s 中环境为 dev、alpha、beta、pro。不同环境的命名规则建议保留，因为 k8s 中部署的 yaml 文件里多处使用了 alpha，beta 的命名，而且数据库命名也有所不同
 
@@ -29,7 +11,6 @@ k8s 中部署也同时支持 4 种环境，不过环境的命名相较与本地�
 # git clone https://github.com/ctripcorp/apollo.git
 cp -r apollo/scripts/apollo-on-kubernetes .
 cd apollo-on-kubernetes/
-
 
 # 这个也可能很慢。。。
 ReleaseVersion="1.6.1"
@@ -69,8 +50,6 @@ docker push ${ImageRepo}/apollo-config-server:v${ReleaseVersion}
 docker push ${ImageRepo}/apollo-portal-server:v${ReleaseVersion}
 ```
 
-## 部署配置
-
 接下来以部署 beta 环境为例
 
 ```shell
@@ -79,7 +58,6 @@ docker push ${ImageRepo}/apollo-portal-server:v${ReleaseVersion}
 │   ├── service-apollo-admin-server-test-beta.yaml
 │   ├── service-apollo-config-server-test-beta.yaml
 │   └── service-mysql-for-apollo-test-beta-env.yaml
-├── apollo_ingress.yaml                   # k8s 部署 ingress 规则
 ├── kubectl-apply.sh                      # 一键部署
 ├── kubectl-delete.sh                     # 一键删除
 └── service-apollo-portal-server.yaml     # apollo ui 部署 yaml
@@ -92,4 +70,3 @@ docker push ${ImageRepo}/apollo-portal-server:v${ReleaseVersion}
 - admin、config、portal 填写 apollo 数据库账户密码
 - service-mysql、portal 中填写 apollo 数据库的 ip，只能是 ip 地址
 - portal 注释掉 dev、alpha、pro 相关内容
-

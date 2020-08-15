@@ -2,7 +2,7 @@ apiVersion: flagger.app/v1beta1
 kind: Canary
 metadata:
   name: podinfo
-  # namespace: test
+  namespace: flagger
 spec:
   # deployment reference
   targetRef:
@@ -29,7 +29,7 @@ spec:
     # - mesh
     # Istio virtual service host names (optional)
     hosts:
-    - app.k8s.com
+    - tt.k8s.com
     # Istio traffic policy (optional)
     trafficPolicy:
       tls:
@@ -52,11 +52,12 @@ spec:
     # percentage (0-100)
     stepWeight: 5
     metrics:
-    - name: 4xx-error
-      # minimum req success rate (non 5xx responses)
-      # percentage (0-100)
+    - name: "time"
+      templateRef:
+        name: time
+        namespace: flagger
       thresholdRange:
-        min: 99
+        min: 10
       interval: 1m
     # webhooks:
     #   - name: acceptance-test
