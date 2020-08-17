@@ -1,0 +1,8 @@
+# Default values for flagger.
+
+
+metricsServer: "http://192.168.1.204:9090"
+
+# accepted values are kubernetes, istio, linkerd, appmesh, nginx, gloo or supergloo:mesh.namespace (defaults to istio)
+meshProvider: "istio"
+
