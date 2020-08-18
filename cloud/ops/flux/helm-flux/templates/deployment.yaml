@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ template "flux.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ template "flux.name" . }}
     chart: {{ template "flux.chart" . }}
@@ -16,6 +17,9 @@ spec:
   template:
     metadata:
       annotations:
+      {{- if .Values.ssh.known_hosts }}
+        checksum/ssh: {{ include (print $.Template.BasePath "/ssh.yaml") . | sha256sum | quote }}
+      {{- end }}
       {{- if .Values.prometheus.enabled }}
         prometheus.io/scrape: "true"
       {{- end }}
@@ -40,9 +44,11 @@ spec:
         - name: {{ .Values.image.pullSecret }}
       {{- end }}
       volumes:
+      {{- if not .Values.kube.externalConfig }}
       - name: kubedir
         configMap:
           name: {{ template "flux.fullname" . }}-kube-config
+      {{- end }}
       {{- if .Values.ssh.known_hosts }}
       - name: sshdir
         configMap:
@@ -125,8 +131,10 @@ spec:
             initialDelaySeconds: 5
             timeoutSeconds: 5
           volumeMounts:
+          {{- if not .Values.kube.externalConfig }}
           - name: kubedir
             mountPath: /root/.kubectl
+          {{- end }}
           {{- if .Values.ssh.known_hosts }}
           - name: sshdir
             mountPath: /root/.ssh
@@ -298,7 +306,7 @@ spec:
       dnsConfig:
 {{ toYaml .Values.dnsConfig | indent 8 }}
 {{- end }}
-      nodeSelector: 
+      nodeSelector:
         beta.kubernetes.io/os: linux
       {{- with .Values.nodeSelector }}
 {{ toYaml . | indent 8 }}

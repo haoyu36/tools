@@ -1,7 +1,9 @@
+{{- if not .Values.kube.externalConfig }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ template "flux.fullname" . }}-kube-config
+  namespace: {{ .Release.Namespace }}
 data:
   config: |
     {{- if not .Values.clusterRole.create }}
@@ -26,3 +28,4 @@ data:
     {{ .Values.kube.config }}
       {{- end }}
     {{- end }}
+{{- end }}
