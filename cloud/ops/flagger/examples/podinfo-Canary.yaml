@@ -29,7 +29,7 @@ spec:
     # - mesh
     # Istio virtual service host names (optional)
     hosts:
-    - tt.k8s.com
+    - app.wiqun.com
     # Istio traffic policy (optional)
     trafficPolicy:
       tls:
@@ -42,7 +42,7 @@ spec:
       retryOn: "gateway-error,connect-failure,refused-stream"
   analysis:
     # schedule interval (default 60s)
-    interval: 40s
+    interval: 20s
     # max number of failed metric checks before rollback
     threshold: 5
     # max traffic percentage routed to canary
@@ -50,7 +50,7 @@ spec:
     maxWeight: 50
     # canary increment step
     # percentage (0-100)
-    stepWeight: 5
+    stepWeight: 15
     metrics:
     - name: "time"
       templateRef:

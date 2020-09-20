@@ -1,0 +1,21 @@
+git:
+  url: "git@codeup.aliyun.com:5f49c5fbd24814603933c21f/ops/zl-pro-cloud-k8-yaml.git"
+  path: "workloads"
+  user: "nate"
+  branch: "haoyu"
+  email: "747464004@qq.com"
+  secretName: "flux-git-deploy"
+
+registry:
+  disableScanning: true
+
+memcached:
+  enabled: false
+
+ssh:
+  known_hosts: |
+    # codeup.aliyun.com:22 SSH-2.0-Go
+    codeup.aliyun.com ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD6WbValczSDKC4ktjRzDNC1qINDAViw/oGA8ud7qH5F9XFZ4QAWhZmFBsp+cppBIOM63exjc4O9vbzMrd7AUItXigymGfTqrGt5VykIiaNhjttxSwbZf3N9eDcAvX4gGm3fcm6D1ACvPxvxMsCwOpdz5tDHqDxGOLPAXN+FSAvjdcN4uMz0MXghGh9Q3zSpy8z1TLkAKT2QBnr4q2tsdZKwWON8bBHIPwP3RSAdSUL6bAyotyncMDAvG53kwRKJ3wJ5ZezXqZNNV7EzHds+pvwThtuWtWsBuuRpL/oZiviWlXy6hILoWbkRfgONPwT0faaOn1GLzjHLuqHHfALGOen
+    # codeup.aliyun.com:22 SSH-2.0-Go
+    # codeup.aliyun.com:22 SSH-2.0-Go
+

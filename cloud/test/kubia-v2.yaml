@@ -3,26 +3,28 @@ apiVersion: apps/v1
 metadata:
   labels:
     app: kubia
-  name: kubia-v1
+  name: kubia-v2
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
         app: kubia
-        version: v1
+        version: v2
   template:
     metadata:
       labels:
         app: kubia
-        version: v1
+        version: v2
     spec:
       containers:
       - name: kubia
-        image: registry.cn-shenzhen.aliyuncs.com/haoyu36/kubia8080
+        image: registry.cn-shenzhen.aliyuncs.com/haoyu36/kubia8080-v2
         imagePullPolicy: IfNotPresent
         ports:
         - name: port
           containerPort: 8080
+
+
 
